@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<User id="0">
+    <Age>20</Age>
+    <Name>Name Namer</Name>
+	<ShortDescription>desc</ShortDescription>
+	<LongDescription>Description</LongDescription>
+</User>
