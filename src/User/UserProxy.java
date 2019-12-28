@@ -41,6 +41,14 @@ public class UserProxy implements IUser {
         return m_user.getLongDescription();
     }
 
+    public UserType getUserType() {
+        return m_userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.m_userType = userType;
+    }
+
     @Override
     public void setId(short id)
     {

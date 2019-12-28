@@ -44,9 +44,9 @@ public class XMLDataBase implements IDataBase {
     }
 
     @Override
-    public List<IUser> LoadAllUsers()
+    public List<UserProxy> LoadAllUsers()
     {
-        List<IUser> userList = new ArrayList<>();
+        List<UserProxy> userList = new ArrayList<>();
         File[] directories = new File(m_pathToUsersDir).listFiles(File::isDirectory);
 
         assert directories != null;
@@ -66,7 +66,7 @@ public class XMLDataBase implements IDataBase {
     }
 
     @Override
-    public IUser LoadUser(int index)
+    public UserProxy LoadUser(int index)
     {
         try
         {
@@ -105,7 +105,7 @@ public class XMLDataBase implements IDataBase {
     }
 
     @Override
-    public boolean SaveUser(IUser userToSave)
+    public boolean SaveUser(UserProxy userToSave)
     {
         String fullPath = m_pathToUsersDir + "\\" + Short.toString(userToSave.getId()) + "\\user.xml";
         boolean savingSucceeded = false;
@@ -138,6 +138,10 @@ public class XMLDataBase implements IDataBase {
             longDescriptionElement.appendChild(document.createTextNode(userToSave.getLongDescription()));
             userElement.appendChild(longDescriptionElement);
 
+            Element userTypeElement = document.createElement("UserType");
+            userTypeElement.appendChild(document.createTextNode(String.format("%s", userToSave.getUserType())));
+            userElement.appendChild(userTypeElement);
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
@@ -164,17 +168,19 @@ public class XMLDataBase implements IDataBase {
     public static void main(String [] args)
     {
         XMLDataBase db = new XMLDataBase("C:\\Users\\aviad\\IdeaProjects\\MatchApp\\Users");
-        for (IUser user : db.LoadAllUsers())
+        /*for (IUser user : db.LoadAllUsers())
         {
             System.out.println(user);
         }
 
-        ILogger logger = Logger.getInstance();
-        logger.WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "second");
 
-        //IUser user = db.LoadUser(0);
-        //user.setAge((short) 666);
-        //db.SaveUser(user);
-        //System.out.println(user);
+        ILogger logger = Logger.getInstance();
+        logger.WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "second");*/
+
+        UserProxy user = db.LoadUser(0);
+        user.setAge((short) 666);
+        user.setUserType(IUser.UserType.ADMIN);
+        db.SaveUser(user);
+        System.out.println(user);
     }
 }
