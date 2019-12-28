@@ -7,13 +7,13 @@ final public class RealUser implements IUser {
     private String m_shortDescription;
     private String m_longDescription;
 
-    public RealUser(short m_id, short m_age, String m_name, String m_shortDescription, String m_longDescription)
+    public RealUser(short id, short age, String name, String shortDescription, String longDescription)
     {
-        this.m_id = m_id;
-        this.m_age = m_age;
-        this.m_name = m_name;
-        this.m_shortDescription = m_shortDescription;
-        this.m_longDescription = m_longDescription;
+        this.m_id = id;
+        this.m_age = age;
+        this.m_name = name;
+        this.m_shortDescription = shortDescription;
+        this.m_longDescription = longDescription;
     }
 
     @Override

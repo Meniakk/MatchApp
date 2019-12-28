@@ -8,6 +8,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import User.UserProxy;
 import org.w3c.dom.*;
 import java.io.File;
 import java.io.IOException;
@@ -87,9 +89,12 @@ public class XMLDataBase implements IDataBase {
             String shortDescription = eElement.getElementsByTagName("ShortDescription").item(0).getTextContent();
             String longDescription = eElement.getElementsByTagName("LongDescription").item(0).getTextContent();
 
+            // Convert String to userType
+            IUser.UserType userType = IUser.StringToUserType(eElement.getElementsByTagName("UserType").item(0).getTextContent());
+
             Logger.getInstance().
                     WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, String.format("User %d was loaded", index));
-            return new RealUser(id, age, name, shortDescription, longDescription);
+            return new UserProxy(id, age, name, shortDescription, longDescription, userType);
         }
         catch (Exception e)
         {

@@ -4,4 +4,5 @@
     <Name>Name Namer</Name>
 	<ShortDescription>desc</ShortDescription>
 	<LongDescription>Description</LongDescription>
+    <UserType>MEMBER</UserType>
 </User>
