@@ -4,28 +4,28 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import User.IUser;
-import User.RealUser;
 import org.w3c.dom.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
-public class FilesDataBase implements IDataBase {
+import Logger.*;
+import User.IUser;
+import User.RealUser;
+
+public class XMLDataBase implements IDataBase {
     private String m_pathToUsersDir;
 
-    public FilesDataBase(String m_pathToUsersDir)
+    public XMLDataBase(String pathToUsersDir)
     {
-        this.m_pathToUsersDir = m_pathToUsersDir;
+        this.m_pathToUsersDir = pathToUsersDir;
+        Logger.getInstance().
+                WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "Users dir is " + pathToUsersDir);
     }
 
     public String getPathToUsersDir()
@@ -33,9 +33,12 @@ public class FilesDataBase implements IDataBase {
         return m_pathToUsersDir;
     }
 
-    public void setPathToUsersDir(String m_pathToUsersDir)
+    public void setPathToUsersDir(String pathToUsersDir)
     {
-        this.m_pathToUsersDir = m_pathToUsersDir;
+        this.m_pathToUsersDir = pathToUsersDir;
+        Logger.getInstance().
+                WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "New users dir is " + pathToUsersDir);
+
     }
 
     @Override
@@ -54,11 +57,8 @@ public class FilesDataBase implements IDataBase {
                 int userIndexInt = Integer.parseInt(userIndex);
                 userList.add(LoadUser(userIndexInt));
             }
-            catch (Exception e)
-            {
-                //todo Add Logger
-                continue;
-            }
+            catch (Exception ignore)
+            { }
         }
         return userList;
     }
@@ -87,11 +87,14 @@ public class FilesDataBase implements IDataBase {
             String shortDescription = eElement.getElementsByTagName("ShortDescription").item(0).getTextContent();
             String longDescription = eElement.getElementsByTagName("LongDescription").item(0).getTextContent();
 
+            Logger.getInstance().
+                    WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, String.format("User %d was loaded", index));
             return new RealUser(id, age, name, shortDescription, longDescription);
         }
         catch (Exception e)
         {
-            System.out.println("Could not load user");
+            Logger.getInstance().
+                    WriteToLog(ILogger.LogLevel.WARNING, ILogger.LogSubject.DATABASE, String.format("User %d could not be loaded", index));
             return null;
         }
     }
@@ -140,10 +143,14 @@ public class FilesDataBase implements IDataBase {
             StreamResult streamResult = new StreamResult(saveFile);
             transformer.transform(domSource, streamResult);
 
+            Logger.getInstance().
+                    WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, String.format("User %d was saved", userToSave.getId()));
+
             savingSucceeded = true;
 
         } catch (ParserConfigurationException | TransformerException | IOException pce) {
-            pce.printStackTrace();
+            Logger.getInstance().
+                    WriteToLog(ILogger.LogLevel.WARNING, ILogger.LogSubject.DATABASE, String.format("User %d could not be saved", userToSave.getId()));
         }
 
         return savingSucceeded;
@@ -151,11 +158,14 @@ public class FilesDataBase implements IDataBase {
 
     public static void main(String [] args)
     {
-        FilesDataBase db = new FilesDataBase("C:\\Users\\aviad\\IdeaProjects\\MatchApp\\Users");
+        XMLDataBase db = new XMLDataBase("C:\\Users\\aviad\\IdeaProjects\\MatchApp\\Users");
         for (IUser user : db.LoadAllUsers())
         {
             System.out.println(user);
         }
+
+        ILogger logger = Logger.getInstance();
+        logger.WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "second");
 
         //IUser user = db.LoadUser(0);
         //user.setAge((short) 666);
