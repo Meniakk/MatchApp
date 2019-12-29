@@ -18,7 +18,6 @@ import java.util.List;
 
 import Logger.*;
 import User.IUser;
-import User.RealUser;
 
 public class XMLDataBase implements IDataBase {
     private String m_pathToUsersDir;
@@ -52,6 +51,7 @@ public class XMLDataBase implements IDataBase {
         assert directories != null;
         for (File directory : directories)
         {
+            //todo do not load loaded users.
             String userIndex = directory.getName();
 
             try
@@ -89,12 +89,14 @@ public class XMLDataBase implements IDataBase {
             String shortDescription = eElement.getElementsByTagName("ShortDescription").item(0).getTextContent();
             String longDescription = eElement.getElementsByTagName("LongDescription").item(0).getTextContent();
 
-            // Convert String to userType
+            // Convert Strings to UserType and UserSex
             IUser.UserType userType = IUser.StringToUserType(eElement.getElementsByTagName("UserType").item(0).getTextContent());
+            IUser.UserSex userSex = IUser.StringToUserSex(eElement.getElementsByTagName("Sex").item(0).getTextContent());
+            IUser.UserSex interestedIn = IUser.StringToUserSex(eElement.getElementsByTagName("InterestedIn").item(0).getTextContent());
 
             Logger.getInstance().
                     WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, String.format("User %d was loaded", index));
-            return new UserProxy(id, age, name, shortDescription, longDescription, userType);
+            return new UserProxy(id, age, name, shortDescription, longDescription, userType, userSex, interestedIn);
         }
         catch (Exception e)
         {
@@ -141,6 +143,14 @@ public class XMLDataBase implements IDataBase {
             Element userTypeElement = document.createElement("UserType");
             userTypeElement.appendChild(document.createTextNode(String.format("%s", userToSave.getUserType())));
             userElement.appendChild(userTypeElement);
+
+            Element userSexElement = document.createElement("Sex");
+            userSexElement.appendChild(document.createTextNode(String.format("%s", userToSave.getUserSex())));
+            userElement.appendChild(userSexElement);
+
+            Element userInterestedInElement = document.createElement("InterestedIn");
+            userInterestedInElement.appendChild(document.createTextNode(String.format("%s", userToSave.getInterestedIn())));
+            userElement.appendChild(userInterestedInElement);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();

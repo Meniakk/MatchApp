@@ -1,5 +1,8 @@
 package User;
 
+import Visitor.CustomerCounterVisitor;
+import Visitor.IVisitor;
+
 final public class RealUser implements IUser {
     private short m_id;
     private short m_age;
@@ -71,4 +74,13 @@ final public class RealUser implements IUser {
     public void setLongDescription(String longDesc) {
         m_longDescription = longDesc;
     }
+
+    @Override
+    public CustomerCounterVisitor generateUsersCounterReport()
+    {
+        CustomerCounterVisitor visitor = new CustomerCounterVisitor();
+        visitor.visit(null/*Server*/);
+        return visitor;
+    }
+
 }

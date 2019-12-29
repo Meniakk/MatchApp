@@ -1,5 +1,7 @@
 package User;
 
+import Visitor.CustomerCounterVisitor;
+
 public interface IUser {
 
     short getId();
@@ -14,13 +16,14 @@ public interface IUser {
     void setShortDescription(String shortDesc);
     void setLongDescription(String longDesc);
 
+    CustomerCounterVisitor generateUsersCounterReport();
+
     enum UserType {
         TRIAL,
         MEMBER,
         GOLD,
         ADMIN
     }
-
     static UserType StringToUserType(String userTypeStr)
     {
         IUser.UserType userType;
@@ -40,5 +43,23 @@ public interface IUser {
                 break;
         }
         return userType;
+    }
+
+    enum UserSex {
+        MALE,
+        FEMALE
+    }
+    static UserSex StringToUserSex(String userSexStr)
+    {
+        IUser.UserSex userSex;
+        switch (userSexStr) {
+            case "MALE":
+                userSex = UserSex.MALE;
+                break;
+            default:
+                userSex = UserSex.FEMALE;
+                break;
+        }
+        return userSex;
     }
 }

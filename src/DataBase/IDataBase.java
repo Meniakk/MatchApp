@@ -1,6 +1,5 @@
 package DataBase;
 
-import User.IUser;
 import User.UserProxy;
 
 import java.util.List;

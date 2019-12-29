@@ -5,4 +5,6 @@
 	<ShortDescription>desc</ShortDescription>
 	<LongDescription>Description</LongDescription>
     <UserType>GOLD</UserType>
+    <Sex>MALE</Sex>
+    <InterestedIn>FEMALE</InterestedIn>
 </User>

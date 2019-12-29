@@ -1,14 +1,29 @@
 package User;
 
-public class UserProxy implements IUser {
+import DataBase.XMLDataBase;
+import Visitor.CustomerCounterVisitor;
+import Visitor.IVisitor;
+import Visitor.IVisitable;
+
+public class UserProxy implements IUser, IVisitable {
 
     private IUser m_user;
     private UserType m_userType;
+    private UserSex m_userSex;
+    private UserSex m_interestedIn;
 
-    public UserProxy(short id, short age, String name, String shortDescription, String longDescription, UserType userType)
+
+
+    public UserProxy(short id, short age, String name, String shortDescription, String longDescription, UserType userType, UserSex userSex, UserSex interestedIn)
     {
         m_userType = userType;
         m_user = new RealUser(id, age, name, shortDescription, longDescription);
+        m_userSex = userSex;
+        m_interestedIn = interestedIn;
+    }
+
+    public UserSex getUserSex() {
+        return m_userSex;
     }
 
     @Override
@@ -45,8 +60,8 @@ public class UserProxy implements IUser {
         return m_userType;
     }
 
-    public void setUserType(UserType userType) {
-        this.m_userType = userType;
+    public UserSex getInterestedIn() {
+        return m_interestedIn;
     }
 
     @Override
@@ -77,5 +92,37 @@ public class UserProxy implements IUser {
     public void setLongDescription(String longDesc)
     {
         m_user.setLongDescription(longDesc);
+    }
+
+    public void setUserType(UserType userType) {
+        this.m_userType = userType;
+    }
+
+    public void setUserSex(UserSex userSex) {
+        this.m_userSex = userSex;
+    }
+
+    public void setInterestedIn(UserSex interestedIn) {
+        this.m_interestedIn = interestedIn;
+    }
+
+    @Override
+    public CustomerCounterVisitor generateUsersCounterReport()
+    {
+        if (m_userType == UserType.ADMIN)
+        {
+            // todo returns to server, to send user the result.
+            return m_user.generateUsersCounterReport();
+        }
+        else
+        {
+            //todo do something?
+            return null;
+        }
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
     }
 }
