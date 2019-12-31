@@ -20,33 +20,15 @@ import Logger.*;
 import User.IUser;
 
 public class XMLDataBase implements IDataBase {
-    private String m_pathToUsersDir;
 
-    public XMLDataBase(String pathToUsersDir)
-    {
-        this.m_pathToUsersDir = pathToUsersDir;
-        Logger.getInstance().
-                WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "Users dir is " + pathToUsersDir);
-    }
-
-    public String getPathToUsersDir()
-    {
-        return m_pathToUsersDir;
-    }
-
-    public void setPathToUsersDir(String pathToUsersDir)
-    {
-        this.m_pathToUsersDir = pathToUsersDir;
-        Logger.getInstance().
-                WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "New users dir is " + pathToUsersDir);
-
-    }
+    private XMLDataBase()
+    { }
 
     @Override
     public List<UserProxy> LoadAllUsers()
     {
         List<UserProxy> userList = new ArrayList<>();
-        File[] directories = new File(m_pathToUsersDir).listFiles(File::isDirectory);
+        File[] directories = new File("Users").listFiles(File::isDirectory);
 
         assert directories != null;
         for (File directory : directories)
@@ -71,7 +53,7 @@ public class XMLDataBase implements IDataBase {
         try
         {
             // Create XML reader.
-            String fullPath = m_pathToUsersDir + "\\" + Integer.toString(index) + "\\user.xml";
+            String fullPath = "Users\\" + Integer.toString(index) + "\\user.xml";
             File fXmlFile = new File(fullPath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -109,7 +91,7 @@ public class XMLDataBase implements IDataBase {
     @Override
     public boolean SaveUser(UserProxy userToSave)
     {
-        String fullPath = m_pathToUsersDir + "\\" + Short.toString(userToSave.getId()) + "\\user.xml";
+        String fullPath = "Users\\" + Short.toString(userToSave.getId()) + "\\user.xml";
         boolean savingSucceeded = false;
 
         try {
@@ -177,7 +159,7 @@ public class XMLDataBase implements IDataBase {
 
     public static void main(String [] args)
     {
-        XMLDataBase db = new XMLDataBase("C:\\Users\\aviad\\IdeaProjects\\MatchApp\\Users");
+        XMLDataBase db = new XMLDataBase();
         /*for (IUser user : db.LoadAllUsers())
         {
             System.out.println(user);
