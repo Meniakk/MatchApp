@@ -13,18 +13,28 @@ import User.UserProxy;
 import org.w3c.dom.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import Logger.*;
 import User.IUser;
 
-public class XMLDataBase implements IDataBase {
+public class XMLDataBase {
+
+    public static final XMLDataBase instance = new XMLDataBase();
 
     private XMLDataBase()
     { }
 
-    @Override
+    public static XMLDataBase getInstance(){
+        return instance;
+    }
+
     public List<UserProxy> LoadAllUsers()
     {
         List<UserProxy> userList = new ArrayList<>();
@@ -47,13 +57,12 @@ public class XMLDataBase implements IDataBase {
         return userList;
     }
 
-    @Override
     public UserProxy LoadUser(int index)
     {
         try
         {
             // Create XML reader.
-            String fullPath = "Users\\" + Integer.toString(index) + "\\user.xml";
+            String fullPath = "Users\\" + index + "\\user.xml";
             File fXmlFile = new File(fullPath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -88,10 +97,9 @@ public class XMLDataBase implements IDataBase {
         }
     }
 
-    @Override
-    public boolean SaveUser(UserProxy userToSave)
+    public boolean SaveUser(IUser userToSave)
     {
-        String fullPath = "Users\\" + Short.toString(userToSave.getId()) + "\\user.xml";
+        String fullPath = "Users\\" + userToSave.getId() + "\\user.xml";
         boolean savingSucceeded = false;
 
         try {
@@ -157,22 +165,38 @@ public class XMLDataBase implements IDataBase {
         return savingSucceeded;
     }
 
+    public short GetNextID()
+    {
+        short maxId = -1;
+        File folder = new File("Users");
+        File[] files = folder.listFiles();
+        if (files == null)
+        {
+            return maxId;
+        }
+
+        for (File file : files)
+        {
+            if (file.isDirectory())
+            {
+                try
+                {
+                    short id = Short.parseShort(file.getName());
+                    if (maxId < id)
+                    {
+                        maxId = id;
+                    }
+                }
+                catch (Exception ignore) {}
+            }
+        }
+
+        return maxId;
+    }
+
     public static void main(String [] args)
     {
         XMLDataBase db = new XMLDataBase();
-        /*for (IUser user : db.LoadAllUsers())
-        {
-            System.out.println(user);
-        }
-
-
-        ILogger logger = Logger.getInstance();
-        logger.WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.DATABASE, "second");*/
-
-        UserProxy user = db.LoadUser(0);
-        user.setAge((short) 666);
-        user.setUserType(IUser.UserType.ADMIN);
-        db.SaveUser(user);
-        System.out.println(user);
+        short id = db.GetNextID();
     }
 }

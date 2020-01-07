@@ -8,22 +8,15 @@ import Visitor.IVisitable;
 public class UserProxy implements IUser, IVisitable {
 
     private IUser m_user;
-    private UserType m_userType;
-    private UserSex m_userSex;
-    private UserSex m_interestedIn;
-
-
 
     public UserProxy(short id, short age, String name, String shortDescription, String longDescription, UserType userType, UserSex userSex, UserSex interestedIn)
     {
-        m_userType = userType;
-        m_user = new RealUser(id, age, name, shortDescription, longDescription);
-        m_userSex = userSex;
-        m_interestedIn = interestedIn;
+        m_user = new RealUser(id, age, name, shortDescription, longDescription, userType, userSex, interestedIn);
     }
 
-    public UserSex getUserSex() {
-        return m_userSex;
+    @Override
+    public String toString() {
+        return String.format("id=\"%d\", name=\"%s\", age=\"%d\"", m_user.getId(), m_user.getName(), m_user.getAge());
     }
 
     @Override
@@ -57,11 +50,15 @@ public class UserProxy implements IUser, IVisitable {
     }
 
     public UserType getUserType() {
-        return m_userType;
+        return m_user.getUserType();
+    }
+
+    public UserSex getUserSex() {
+        return m_user.getUserSex();
     }
 
     public UserSex getInterestedIn() {
-        return m_interestedIn;
+        return m_user.getInterestedIn();
     }
 
     @Override
@@ -94,22 +91,10 @@ public class UserProxy implements IUser, IVisitable {
         m_user.setLongDescription(longDesc);
     }
 
-    public void setUserType(UserType userType) {
-        this.m_userType = userType;
-    }
-
-    public void setUserSex(UserSex userSex) {
-        this.m_userSex = userSex;
-    }
-
-    public void setInterestedIn(UserSex interestedIn) {
-        this.m_interestedIn = interestedIn;
-    }
-
     @Override
     public CustomerCounterVisitor generateUsersCounterReport()
     {
-        if (m_userType == UserType.ADMIN)
+        if (m_user.getUserType() == UserType.ADMIN)
         {
             // todo returns to server, to send user the result.
             return m_user.generateUsersCounterReport();

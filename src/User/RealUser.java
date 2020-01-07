@@ -1,5 +1,6 @@
 package User;
 
+import Server.Server;
 import Visitor.CustomerCounterVisitor;
 import Visitor.IVisitor;
 
@@ -9,14 +10,20 @@ final public class RealUser implements IUser {
     private String m_name;
     private String m_shortDescription;
     private String m_longDescription;
+    private UserType m_userType;
+    private UserSex m_userSex;
+    private UserSex m_interestedIn;
 
-    public RealUser(short id, short age, String name, String shortDescription, String longDescription)
+    public RealUser(short id, short age, String name, String shortDescription, String longDescription, UserType userType, UserSex userSex, UserSex interestedIn)
     {
         this.m_id = id;
         this.m_age = age;
         this.m_name = name;
         this.m_shortDescription = shortDescription;
         this.m_longDescription = longDescription;
+        m_userType = userType;
+        m_userSex = userSex;
+        m_interestedIn = interestedIn;
     }
 
     @Override
@@ -51,6 +58,21 @@ final public class RealUser implements IUser {
     }
 
     @Override
+    public UserType getUserType() {
+        return m_userType;
+    }
+
+    @Override
+    public UserSex getUserSex() {
+        return m_userSex;
+    }
+
+    @Override
+    public UserSex getInterestedIn() {
+        return m_interestedIn;
+    }
+
+    @Override
     public void setId(short id) {
         m_id = id;
     }
@@ -79,7 +101,8 @@ final public class RealUser implements IUser {
     public CustomerCounterVisitor generateUsersCounterReport()
     {
         CustomerCounterVisitor visitor = new CustomerCounterVisitor();
-        visitor.visit(null/*Server*/);
+        //todo Server need to be a singleton
+        visitor.visit(Server.getInstance());
         return visitor;
     }
 

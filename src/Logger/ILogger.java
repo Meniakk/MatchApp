@@ -11,6 +11,7 @@ public interface ILogger {
     }
 
     enum LogSubject {
+        SERVER,
         USER,
         DATABASE,
         MATCHER,

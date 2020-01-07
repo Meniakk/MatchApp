@@ -1,5 +1,7 @@
 package Visitor;
 
+import Server.Server;
+import User.RealUser;
 import User.UserProxy;
 
 public class CustomerCounterVisitor implements IVisitor
@@ -46,11 +48,14 @@ public class CustomerCounterVisitor implements IVisitor
         }
     }
 
+    public void visit(RealUser user)
+    {    }
+
     //todo Server need to have an accept method.
-    public void visit(/*Server server*/)
+    public void visit(Server server)
     {
         //Visit Server.
-
+        server.accept(this);
         // Save report somewhere.
     }
 }

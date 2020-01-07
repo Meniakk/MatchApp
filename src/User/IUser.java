@@ -9,6 +9,9 @@ public interface IUser {
     String getName();
     String getShortDescription();
     String getLongDescription();
+    UserType getUserType();
+    UserSex getUserSex();
+    UserSex getInterestedIn();
 
     void setId(short id);
     void setAge(short age);
@@ -62,4 +65,5 @@ public interface IUser {
         }
         return userSex;
     }
+
 }
