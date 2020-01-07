@@ -3,6 +3,7 @@ package Visitor;
 import Server.Server;
 import User.RealUser;
 import User.UserProxy;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class CustomerCounterVisitor implements IVisitor
 {
@@ -33,7 +34,13 @@ public class CustomerCounterVisitor implements IVisitor
     @Override
     public void visit(UserProxy user)
     {
-        switch (user.getUserType()) {
+        throw new NotImplementedException();
+    }
+
+    public void visit(RealUser user)
+    {
+        switch (user.getUserType())
+        {
             case TRIAL:
                 ++m_trialUsers;
                 break;
@@ -48,14 +55,8 @@ public class CustomerCounterVisitor implements IVisitor
         }
     }
 
-    public void visit(RealUser user)
-    {    }
-
-    //todo Server need to have an accept method.
     public void visit(Server server)
     {
-        //Visit Server.
         server.accept(this);
-        // Save report somewhere.
     }
 }

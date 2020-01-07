@@ -97,11 +97,15 @@ final public class RealUser implements IUser {
         m_longDescription = longDesc;
     }
 
+    /**
+     * The command will call this function to start the visiting process
+     * Command->ProxyUser->RealUser->Server->AllUsers(ProxyUser->RealUser)
+     * @return a CustomerCounterVisitor after all the visits.
+     */
     @Override
     public CustomerCounterVisitor generateUsersCounterReport()
     {
         CustomerCounterVisitor visitor = new CustomerCounterVisitor();
-        //todo Server need to be a singleton
         visitor.visit(Server.getInstance());
         return visitor;
     }

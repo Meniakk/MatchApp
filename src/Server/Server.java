@@ -25,8 +25,6 @@ public class Server implements IVisitable {
         return instance;
     }
 
-    //todo need to do all commands via user, or the proxy pattern wont matter.
-
     private Server()
     {
         m_usersList = new ArrayList<>();
