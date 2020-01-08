@@ -1,8 +1,8 @@
 package Visitor;
 
-import User.UserProxy;
+import User.IUser;
 
 public interface IVisitor {
-    public void visit(UserProxy user);
+    public void visit(IUser user);
     //todo public void visit(Server server);
 }

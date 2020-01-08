@@ -1,6 +1,7 @@
 package User;
 
 import Visitor.CustomerCounterVisitor;
+import Visitor.IVisitor;
 
 public interface IUser {
 
@@ -18,6 +19,8 @@ public interface IUser {
     void setName(String name);
     void setShortDescription(String shortDesc);
     void setLongDescription(String longDesc);
+
+    void accept(IVisitor visitor);
 
     CustomerCounterVisitor generateUsersCounterReport();
 

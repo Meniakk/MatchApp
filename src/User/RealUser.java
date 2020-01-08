@@ -97,6 +97,12 @@ final public class RealUser implements IUser {
         m_longDescription = longDesc;
     }
 
+    @Override
+    public void accept(IVisitor visitor)
+    {
+        visitor.visit(this);
+    }
+
     /**
      * The command will call this function to start the visiting process
      * Command->ProxyUser->RealUser->Server->AllUsers(ProxyUser->RealUser)

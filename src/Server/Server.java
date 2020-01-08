@@ -64,12 +64,39 @@ public class Server implements IVisitable {
         return creationSucceeded;
     }
 
-
     @Override
-    public void accept(IVisitor visitor) {
+    public void accept(IVisitor visitor)
+    {
         for (IUser user: m_usersList)
         {
-
+            user.accept(visitor);
         }
+    }
+
+    public boolean isUserExist(short id)
+    {
+        boolean isExist = false;
+
+        for (IUser user : m_usersList)
+        {
+            if (user.getId() == id)
+            {
+                isExist = true;
+                break;
+            }
+        }
+
+        if (!isExist)
+        {
+            //todo Maybe load all users on start up, and delete this part
+            IUser user = m_dataBase.LoadUser(id);
+            if (user != null)
+            {
+                isExist = true;
+                m_usersList.add(user);
+            }
+        }
+
+        return isExist;
     }
 }

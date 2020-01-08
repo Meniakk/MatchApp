@@ -1,6 +1,7 @@
 package Visitor;
 
 import Server.Server;
+import User.IUser;
 import User.RealUser;
 import User.UserProxy;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -31,10 +32,9 @@ public class CustomerCounterVisitor implements IVisitor
         m_goldUsers = 0;
     }
 
-    @Override
-    public void visit(UserProxy user)
+    public void visit(IUser user)
     {
-        throw new NotImplementedException();
+
     }
 
     public void visit(RealUser user)
