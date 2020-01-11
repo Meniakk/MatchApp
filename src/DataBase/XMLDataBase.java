@@ -9,6 +9,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import Server.Server;
 import User.UserProxy;
 import org.w3c.dom.*;
 import java.io.File;
@@ -43,17 +44,22 @@ public class XMLDataBase {
         assert directories != null;
         for (File directory : directories)
         {
-            //todo do not load loaded users.
             String userIndex = directory.getName();
 
             try
             {
                 int userIndexInt = Integer.parseInt(userIndex);
-                IUser userToLoad = LoadUser(userIndexInt);
-                if (userToLoad != null)
+
+                // Do not load loaded users.
+                if (! Server.getInstance().isUserExist((short)userIndexInt))
                 {
-                    userList.add(userToLoad);
+                    IUser userToLoad = LoadUser(userIndexInt);
+                    if (userToLoad != null)
+                    {
+                        userList.add(userToLoad);
+                    }
                 }
+
             }
             catch (Exception ignore)
             { }
