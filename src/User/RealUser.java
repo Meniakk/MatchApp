@@ -112,7 +112,7 @@ final public class RealUser implements IUser {
     public CustomerCounterVisitor generateUsersCounterReport()
     {
         CustomerCounterVisitor visitor = new CustomerCounterVisitor();
-        visitor.visit(Server.getInstance());
+        Server.getInstance().accept(visitor);
         return visitor;
     }
 

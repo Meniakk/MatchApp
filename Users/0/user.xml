@@ -4,7 +4,7 @@
     <Name>Name Namerr</Name>
     <ShortDescription>desc</ShortDescription>
     <LongDescription>Description</LongDescription>
-    <UserType>MEMBER</UserType>
+    <UserType>ADMIN</UserType>
     <Sex>MALE</Sex>
     <InterestedIn>FEMALE</InterestedIn>
 </User>

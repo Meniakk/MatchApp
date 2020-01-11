@@ -61,6 +61,11 @@ public class UserProxy implements IUser, IVisitable {
         return m_user.getInterestedIn();
     }
 
+    private IUser getRealUser()
+    {
+        return m_user;
+    }
+
     @Override
     public void setId(short id)
     {
@@ -96,18 +101,17 @@ public class UserProxy implements IUser, IVisitable {
     {
         if (m_user.getUserType() == UserType.ADMIN)
         {
-            // todo returns to server, to send user the result.
             return m_user.generateUsersCounterReport();
         }
         else
         {
-            //todo do something?
             return null;
         }
     }
 
     @Override
-    public void accept(IVisitor visitor) {
-        visitor.visit(this);
+    public void accept(IVisitor visitor)
+    {
+        visitor.visit(getRealUser());
     }
 }

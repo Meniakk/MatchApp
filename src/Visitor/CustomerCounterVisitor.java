@@ -32,11 +32,6 @@ public class CustomerCounterVisitor implements IVisitor
         m_goldUsers = 0;
     }
 
-    public void visit(IUser user)
-    {
-
-    }
-
     public void visit(RealUser user)
     {
         switch (user.getUserType())
@@ -55,8 +50,24 @@ public class CustomerCounterVisitor implements IVisitor
         }
     }
 
-    public void visit(Server server)
+    @Override
+    public void visit(IUser user)
     {
-        server.accept(this);
+        user.accept(this);
+    }
+
+    @Override
+    public void visit(UserProxy user)
+    {
+        user.accept(this);
+    }
+
+    @Override
+    public String toString() {
+
+        return "Customer Counter Results: " +
+                "Trial Users = " + m_trialUsers +
+                " | Member Users = " + m_memberUsers +
+                " | Gold Users = " + m_goldUsers;
     }
 }

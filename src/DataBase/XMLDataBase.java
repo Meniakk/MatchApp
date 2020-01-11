@@ -35,9 +35,9 @@ public class XMLDataBase {
         return instance;
     }
 
-    public List<UserProxy> LoadAllUsers()
+    public List<IUser> LoadAllUsers()
     {
-        List<UserProxy> userList = new ArrayList<>();
+        List<IUser> userList = new ArrayList<>();
         File[] directories = new File("Users").listFiles(File::isDirectory);
 
         assert directories != null;
@@ -49,7 +49,11 @@ public class XMLDataBase {
             try
             {
                 int userIndexInt = Integer.parseInt(userIndex);
-                userList.add(LoadUser(userIndexInt));
+                IUser userToLoad = LoadUser(userIndexInt);
+                if (userToLoad != null)
+                {
+                    userList.add(userToLoad);
+                }
             }
             catch (Exception ignore)
             { }
@@ -57,7 +61,7 @@ public class XMLDataBase {
         return userList;
     }
 
-    public UserProxy LoadUser(int index)
+    public IUser LoadUser(int index)
     {
         try
         {

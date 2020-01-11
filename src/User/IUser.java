@@ -3,6 +3,8 @@ package User;
 import Visitor.CustomerCounterVisitor;
 import Visitor.IVisitor;
 
+import java.util.List;
+
 public interface IUser {
 
     short getId();

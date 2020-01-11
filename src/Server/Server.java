@@ -4,6 +4,8 @@ import DataBase.XMLDataBase;
 import Logger.ILogger;
 import Logger.Logger;
 import Matcher.IMatcher;
+import Matcher.LevenshteinDistanceMatcher;
+import Matcher.RandomMatcher;
 import User.IUser;
 import User.UserProxy;
 import Visitor.IVisitable;
@@ -13,9 +15,8 @@ import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server implements IVisitable {
+public class Server {
 
-    private XMLDataBase m_dataBase;
     private List<IUser> m_usersList;
     private short m_nextID;
 
@@ -27,9 +28,8 @@ public class Server implements IVisitable {
 
     private Server()
     {
-        m_usersList = new ArrayList<>();
-        m_dataBase = XMLDataBase.getInstance();
-        m_nextID = m_dataBase.GetNextID();
+        m_usersList = XMLDataBase.getInstance().LoadAllUsers();
+        m_nextID = XMLDataBase.getInstance().GetNextID();
     }
 
     public IUser getMatch(IUser userToMatch, IMatcher matcher)
@@ -53,7 +53,7 @@ public class Server implements IVisitable {
         try
         {
             IUser newUser = new UserProxy(m_nextID, age, name, shortDescription, longDescription, userType, userSex, interestedIn);
-            m_dataBase.SaveUser(newUser);
+            XMLDataBase.getInstance().SaveUser(newUser);
             ++m_nextID;
             m_usersList.add(newUser);
             creationSucceeded = true;
@@ -64,7 +64,6 @@ public class Server implements IVisitable {
         return creationSucceeded;
     }
 
-    @Override
     public void accept(IVisitor visitor)
     {
         for (IUser user: m_usersList)
@@ -86,17 +85,15 @@ public class Server implements IVisitable {
             }
         }
 
-        if (!isExist)
-        {
-            //todo Maybe load all users on start up, and delete this part
-            IUser user = m_dataBase.LoadUser(id);
-            if (user != null)
-            {
-                isExist = true;
-                m_usersList.add(user);
-            }
-        }
-
         return isExist;
+    }
+
+    public static void main(String [] args)
+    {
+        Server server = Server.getInstance();
+        IVisitor visitor = server.m_usersList.get(0).generateUsersCounterReport();
+        System.out.println(visitor);
+
+        System.out.println(server.getMatch(server.m_usersList.get(0), new LevenshteinDistanceMatcher()));
     }
 }
