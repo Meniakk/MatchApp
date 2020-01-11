@@ -2,7 +2,7 @@
 <User id="0">
     <Age>20</Age>
     <Name>Name Namerr</Name>
-    <ShortDescription>desc</ShortDescription>
+    <ShortDescription>ShortDescription</ShortDescription>
     <LongDescription>Description</LongDescription>
     <UserType>ADMIN</UserType>
     <Sex>MALE</Sex>

@@ -1,6 +1,8 @@
 package Matcher;
 
 import User.IUser;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,11 @@ class ConsiderateMatcher implements IMatcher
 
     @Override
     public IUser getMatch(IUser userToMatch, List<IUser> usersList) {
-        return null;
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<IUser> getKMatches(IUser userToMatch, List<IUser> usersList, int k) {
+        throw new NotImplementedException();
     }
 }

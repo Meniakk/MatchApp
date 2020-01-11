@@ -1,0 +1,15 @@
+INFO,LOGGER,Log file created.
+INFO,DATABASE,User 0 was loaded
+INFO,DATABASE,User 1 was loaded
+INFO,DATABASE,User 10 was loaded
+INFO,DATABASE,User 11 was loaded
+INFO,DATABASE,User 2 was loaded
+INFO,DATABASE,User 3 was loaded
+INFO,DATABASE,User 4 was loaded
+INFO,DATABASE,User 5 was loaded
+INFO,DATABASE,User 6 was loaded
+INFO,DATABASE,User 7 was loaded
+INFO,DATABASE,User 8 was loaded
+INFO,DATABASE,User 9 was loaded
+INFO,SERVER,Looking for 2 matches for 0
+INFO,SERVER,Found 2 matches out of 2

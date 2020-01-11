@@ -47,6 +47,26 @@ public class Server {
         return match;
     }
 
+    public List<IUser> getKMatches(IUser userToMatch, IMatcher matcher, int k)
+    {
+        Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.SERVER,
+                String.format("Looking for %d matches for %d", k, userToMatch.getId()));
+
+        List<IUser> matches = matcher.getKMatches(userToMatch, m_usersList, k);
+        if (matches == null)
+        {
+            Logger.getInstance().WriteToLog(ILogger.LogLevel.WARNING, ILogger.LogSubject.SERVER,
+                    "Could not find any matches");
+        }
+        else
+        {
+            int countOfMatches = matches.size();
+            Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.SERVER,
+                    String.format("Found %d matches out of %d", countOfMatches, k));
+        }
+        return matches;
+    }
+
     public boolean createNewUser(short age, String name, String shortDescription, String longDescription, IUser.UserType userType, IUser.UserSex userSex, IUser.UserSex interestedIn)
     {
         boolean creationSucceeded = false;
@@ -91,9 +111,6 @@ public class Server {
     public static void main(String [] args)
     {
         Server server = Server.getInstance();
-        IVisitor visitor = server.m_usersList.get(0).generateUsersCounterReport();
-        System.out.println(visitor);
-
-        System.out.println(server.getMatch(server.m_usersList.get(0), new LevenshteinDistanceMatcher()));
+        System.out.println(server.getKMatches(server.m_usersList.get(0), new LevenshteinDistanceMatcher(), 2));
     }
 }
