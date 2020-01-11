@@ -114,3 +114,4 @@ public class Server {
         System.out.println(server.getKMatches(server.m_usersList.get(0), new LevenshteinDistanceMatcher(), 2));
     }
 }
+
