@@ -16,7 +16,8 @@ public interface ILogger {
         DATABASE,
         MATCHER,
         VISITOR,
-        LOGGER
+        LOGGER,
+        COMMAND
     }
 
     void WriteToLog(LogLevel logLevel, LogSubject logSubject, String message);
