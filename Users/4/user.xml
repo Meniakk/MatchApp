@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<User id="4">
+<Age>24</Age>
+<Name>Name Namerr</Name>
+<ShortDescription>desc</ShortDescription>
+<LongDescription>Description</LongDescription>
+<UserType>TRIAL</UserType>
+<Sex>FEMALE</Sex>
+<InterestedIn>FEMALE</InterestedIn>
+</User>
