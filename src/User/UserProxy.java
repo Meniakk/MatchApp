@@ -5,6 +5,8 @@ import Visitor.CustomerCounterVisitor;
 import Visitor.IVisitor;
 import Visitor.IVisitable;
 
+import java.util.List;
+
 public class UserProxy implements IUser, IVisitable {
 
     private IUser m_user;
@@ -59,6 +61,26 @@ public class UserProxy implements IUser, IVisitable {
 
     public UserSex getInterestedIn() {
         return m_user.getInterestedIn();
+    }
+
+    @Override
+    public void addLikedUser(IUser likedUser) {
+        m_user.addLikedUser(likedUser);
+    }
+
+    @Override
+    public void addLikedBy(IUser userThatLiked) {
+        m_user.addLikedBy(userThatLiked);
+    }
+
+    @Override
+    public List<IUser> getUsersThatLiked() {
+        return m_user.getUsersThatLiked();
+    }
+
+    @Override
+    public List<IUser> getLikedUsers() {
+        return m_user.getLikedUsers();
     }
 
     private IUser getRealUser()

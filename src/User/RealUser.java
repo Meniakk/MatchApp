@@ -4,6 +4,9 @@ import Server.Server;
 import Visitor.CustomerCounterVisitor;
 import Visitor.IVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 final public class RealUser implements IUser {
     private short m_id;
     private short m_age;
@@ -13,6 +16,9 @@ final public class RealUser implements IUser {
     private UserType m_userType;
     private UserSex m_userSex;
     private UserSex m_interestedIn;
+    List<IUser> m_usersThatLiked;   // Users that liked the current user.
+    List<IUser> m_likedUsers;       // Users that the current user liked.
+
 
     public RealUser(short id, short age, String name, String shortDescription, String longDescription, UserType userType, UserSex userSex, UserSex interestedIn)
     {
@@ -24,6 +30,9 @@ final public class RealUser implements IUser {
         m_userType = userType;
         m_userSex = userSex;
         m_interestedIn = interestedIn;
+
+        m_usersThatLiked = new ArrayList<>();
+        m_likedUsers = new ArrayList<>();
     }
 
     @Override
@@ -70,6 +79,26 @@ final public class RealUser implements IUser {
     @Override
     public UserSex getInterestedIn() {
         return m_interestedIn;
+    }
+
+    @Override
+    public List<IUser> getUsersThatLiked() {
+        return m_usersThatLiked;
+    }
+
+    @Override
+    public List<IUser> getLikedUsers() {
+        return m_likedUsers;
+    }
+
+    public void addLikedUser(IUser likedUser)
+    {
+        m_likedUsers.add(likedUser);
+    }
+
+    public void addLikedBy(IUser userThatLiked)
+    {
+        m_usersThatLiked.add(userThatLiked);
     }
 
     @Override

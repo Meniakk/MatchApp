@@ -16,6 +16,12 @@ public interface IUser {
     UserSex getUserSex();
     UserSex getInterestedIn();
 
+    void addLikedUser(IUser likedUser);
+    void addLikedBy(IUser userThatLiked);
+    List<IUser> getUsersThatLiked();
+    List<IUser> getLikedUsers();
+
+
     void setId(short id);
     void setAge(short age);
     void setName(String name);
