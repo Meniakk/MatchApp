@@ -108,6 +108,21 @@ public class Server {
         return isExist;
     }
 
+    public IUser getUserByID(short id)
+    {
+        IUser userToSend = null;
+
+        for (IUser user : m_usersList)
+        {
+            if (user.getId() == id)
+            {
+                userToSend = user;
+                break;
+            }
+        }
+        return userToSend;
+    }
+
     public static void main(String [] args)
     {
         Server server = Server.getInstance();

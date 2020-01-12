@@ -136,4 +136,15 @@ public class UserProxy implements IUser, IVisitable {
     {
         visitor.visit(getRealUser());
     }
+
+    @Override
+    public IUser getUserThatLiked()
+    {
+        IUser userThatLiked = null;
+        if (m_user.getUserType() == UserType.GOLD)
+        {
+            userThatLiked = m_user.getUserThatLiked();
+        }
+        return userThatLiked;
+    }
 }

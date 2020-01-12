@@ -29,6 +29,7 @@ public interface IUser {
     void setLongDescription(String longDesc);
 
     void accept(IVisitor visitor);
+    IUser getUserThatLiked();
 
     CustomerCounterVisitor generateUsersCounterReport();
 

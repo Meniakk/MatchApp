@@ -132,6 +132,17 @@ final public class RealUser implements IUser {
         visitor.visit(this);
     }
 
+    @Override
+    public IUser getUserThatLiked()
+    {
+        IUser userThatLiked = null;
+        if (!m_usersThatLiked.isEmpty())
+        {
+            userThatLiked = m_usersThatLiked.get(0);
+        }
+        return userThatLiked;
+    }
+
     /**
      * The command will call this function to start the visiting process
      * Command->ProxyUser->RealUser->Server->AllUsers(ProxyUser->RealUser)
