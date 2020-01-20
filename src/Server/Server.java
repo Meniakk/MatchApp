@@ -123,6 +123,18 @@ public class Server {
         return userToSend;
     }
 
+    public boolean saveUser(short id)
+    {
+        for (IUser user:m_usersList)
+        {
+            if (user.getId() == id)
+            {
+                return XMLDataBase.getInstance().SaveUser(user);
+            }
+        }
+        return false;
+    }
+
     public static void main(String [] args)
     {
         Server server = Server.getInstance();
