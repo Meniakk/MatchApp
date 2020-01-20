@@ -30,6 +30,7 @@ public interface IUser {
 
     void accept(IVisitor visitor);
     IUser getUserThatLiked();
+    boolean liked(short id);
 
     CustomerCounterVisitor generateUsersCounterReport();
 

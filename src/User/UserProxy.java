@@ -147,4 +147,10 @@ public class UserProxy implements IUser, IVisitable {
         }
         return userThatLiked;
     }
+
+    @Override
+    public boolean liked(short id)
+    {
+        return m_user.liked(id);
+    }
 }

@@ -143,6 +143,18 @@ final public class RealUser implements IUser {
         return userThatLiked;
     }
 
+    @Override
+    public boolean liked(short id)
+    {
+        IUser userThatLiked = Server.getInstance().getUserByID(id);
+        if (userThatLiked == null)
+        {
+            return false;
+        }
+        m_usersThatLiked.add(userThatLiked);
+        return true;
+    }
+
     /**
      * The command will call this function to start the visiting process
      * Command->ProxyUser->RealUser->Server->AllUsers(ProxyUser->RealUser)
