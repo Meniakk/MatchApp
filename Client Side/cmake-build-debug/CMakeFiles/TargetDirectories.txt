@@ -1,3 +1,0 @@
-C:/Users/noamc/source/repos/MatchApp/Client Side/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/noamc/source/repos/MatchApp/Client Side/cmake-build-debug/CMakeFiles/Client_Side.dir
-C:/Users/noamc/source/repos/MatchApp/Client Side/cmake-build-debug/CMakeFiles/rebuild_cache.dir
