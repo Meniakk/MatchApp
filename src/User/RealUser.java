@@ -151,7 +151,8 @@ final public class RealUser implements IUser {
         {
             return false;
         }
-        m_usersThatLiked.add(userThatLiked);
+        m_likedUsers.add(userThatLiked);
+        userThatLiked.addLikedBy(this);
         return true;
     }
 
