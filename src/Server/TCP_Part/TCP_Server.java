@@ -23,6 +23,7 @@ public class TCP_Server {
     }
 
     public TCP_Server(int port, Lexer lexer, Parser parser) {
+        this.port = port;
         this.lexer = lexer;
         this.parser = parser;
     }

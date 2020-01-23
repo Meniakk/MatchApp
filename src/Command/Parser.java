@@ -1,5 +1,7 @@
 package Command;
 
+import Command.Commands.*;
+
 import java.util.*;
 
 public class Parser {
@@ -7,6 +9,12 @@ public class Parser {
 
     public Parser() {
         commands = new HashMap<>();
+        commands.put("is_user", new IsUserRegisteredCommand());
+        commands.put("new_user", new RegisterNewUserCommand());
+        //commands.put("get", new);
+        commands.put("love", new LikeCommand());
+        commands.put("loved", new GetUserThatLikedCommand());
+        commands.put("bi", new BusinessInformationCommand());
     }
 
     public String parse(List<String> line) {
