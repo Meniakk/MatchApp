@@ -1,6 +1,7 @@
 package User;
 
 import DataBase.XMLDataBase;
+import Matcher.IMatcher;
 import Visitor.CustomerCounterVisitor;
 import Visitor.IVisitor;
 import Visitor.IVisitable;
@@ -11,8 +12,7 @@ public class UserProxy implements IUser, IVisitable {
 
     private IUser m_user;
 
-    public UserProxy(short id, short age, String name, String shortDescription, String longDescription, UserType userType, UserSex userSex, UserSex interestedIn)
-    {
+    public UserProxy(short id, short age, String name, String shortDescription, String longDescription, UserType userType, UserSex userSex, UserSex interestedIn) {
         m_user = new RealUser(id, age, name, shortDescription, longDescription, userType, userSex, interestedIn);
     }
 
@@ -22,32 +22,27 @@ public class UserProxy implements IUser, IVisitable {
     }
 
     @Override
-    public short getId()
-    {
+    public short getId() {
         return m_user.getId();
     }
 
     @Override
-    public short getAge()
-    {
+    public short getAge() {
         return m_user.getAge();
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return m_user.getName();
     }
 
     @Override
-    public String getShortDescription()
-    {
+    public String getShortDescription() {
         return m_user.getShortDescription();
     }
 
     @Override
-    public String getLongDescription()
-    {
+    public String getLongDescription() {
         return m_user.getLongDescription();
     }
 
@@ -83,74 +78,72 @@ public class UserProxy implements IUser, IVisitable {
         return m_user.getLikedUsers();
     }
 
-    private IUser getRealUser()
-    {
+    private IUser getRealUser() {
         return m_user;
     }
 
     @Override
-    public void setId(short id)
-    {
+    public void setId(short id) {
         m_user.setId(id);
     }
 
     @Override
-    public void setAge(short age)
-    {
+    public void setAge(short age) {
         m_user.setAge(age);
     }
 
     @Override
-    public void setName(String name)
-    {
+    public void setName(String name) {
         m_user.setName(name);
     }
 
     @Override
-    public void setShortDescription(String shortDesc)
-    {
+    public void setShortDescription(String shortDesc) {
         m_user.setShortDescription(shortDesc);
     }
 
     @Override
-    public void setLongDescription(String longDesc)
-    {
+    public void setLongDescription(String longDesc) {
         m_user.setLongDescription(longDesc);
     }
 
     @Override
-    public CustomerCounterVisitor generateUsersCounterReport()
-    {
-        if (m_user.getUserType() == UserType.ADMIN)
-        {
+    public CustomerCounterVisitor generateUsersCounterReport() {
+        if (m_user.getUserType() == UserType.ADMIN) {
             return m_user.generateUsersCounterReport();
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public void accept(IVisitor visitor)
-    {
+    public void accept(IVisitor visitor) {
         visitor.visit(getRealUser());
     }
 
     @Override
-    public IUser getUserThatLiked()
-    {
+    public IUser getUserThatLiked() {
         IUser userThatLiked = null;
-        if (m_user.getUserType() == UserType.GOLD)
-        {
+        if (m_user.getUserType() == UserType.GOLD) {
             userThatLiked = m_user.getUserThatLiked();
         }
         return userThatLiked;
     }
 
     @Override
-    public boolean liked(short id)
-    {
+    public List<IUser> getKMatches(IMatcher matcher, int k) {
+        if (k == 1) {
+            m_user.getKMatches(matcher, k);
+        } else if (k > 1) {
+            if (m_user.getUserType() == UserType.MEMBER || m_user.getUserType() == UserType.GOLD) {
+                m_user.getKMatches(matcher, k);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean liked(short id) {
         return m_user.liked(id);
     }
 }

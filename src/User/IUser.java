@@ -1,5 +1,6 @@
 package User;
 
+import Matcher.IMatcher;
 import Visitor.CustomerCounterVisitor;
 import Visitor.IVisitor;
 
@@ -30,6 +31,7 @@ public interface IUser {
 
     void accept(IVisitor visitor);
     IUser getUserThatLiked();
+    List<IUser> getKMatches(IMatcher matcher, int k);
     boolean liked(short id);
 
     CustomerCounterVisitor generateUsersCounterReport();
