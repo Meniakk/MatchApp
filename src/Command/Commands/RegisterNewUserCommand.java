@@ -9,14 +9,14 @@ import java.util.List;
 
 public class RegisterNewUserCommand implements ICommand<String> {
     //types of user types
-    private static final String TRIAL = "Trial";
-    private static final String GOLD = "Gold";
-    private static final String MEMBER = "Member";
-    private static final String ADMIN = "Admin";
+    private static final String TRIAL = "TRIAL";
+    private static final String GOLD = "GOLD";
+    private static final String MEMBER = "MEMBER";
+    private static final String ADMIN = "ADMIN";
 
     //types of user sex
-    private static final String MALE = "Male";
-    private static final String FEMALE = "Female";
+    private static final String MALE = "MALE";
+    private static final String FEMALE = "FEMALE";
 
     @Override
     public String doCommand(List<String> line) {
@@ -24,9 +24,9 @@ public class RegisterNewUserCommand implements ICommand<String> {
         String name = line.get(2);
         String shortDescription = line.get(3);
         String longDescription = line.get(4);
-        String userTypeString = line.get(5);
-        String userSexString = line.get(6);
-        String interestedInString = line.get(7);
+        String userTypeString = line.get(5).toUpperCase();
+        String userSexString = line.get(6).toUpperCase();
+        String interestedInString = line.get(7).toUpperCase();
 
         IUser.UserType userType;
         switch (userTypeString) {

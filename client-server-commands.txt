@@ -3,4 +3,4 @@ new_user <...>;	<0,1>;	add user to database
 get <id>,<k>;	<0>/<name>,<short>,<long>,<id>~<name>,<short>,<long>,<id>...;	get the k matches for user
 love <id1>,<id2>;	<0,1>;	mark user id2 as loved by id1
 loved <id>;	<0>/<name>,<short>,<long>;	get user that laved user id 
-bi <report_tag>;	<0>/<report>;	get the report of report tag
+bi <id>,<report_tag>;	<0>/<report>;	get the report of report tag

@@ -198,7 +198,7 @@ public class XMLDataBase {
             }
         }
 
-        return maxId;
+        return (short)(maxId + 1);
     }
 
     public static void main(String [] args)

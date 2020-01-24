@@ -39,15 +39,23 @@ public class TCP_Server {
         {
 
             clientSentence = inFromClient.readLine();
+            if (clientSentence == null)
+            {
+                close();
+                continue;
+            }
             System.out.println("Received: " + clientSentence);
 
             String returnValue = parser.parse(lexer.lex(clientSentence));
+            System.out.println("Returned: " + returnValue);
             outToClient.writeBytes(returnValue);
         }
+        welcomeSocket.close();
     }
-    //todo close the connection after each resonse
+    //todo close the connection after each response
 
-    public void close() {
+    public void close()
+    {
         this.stay_alive = false;
     }
 }

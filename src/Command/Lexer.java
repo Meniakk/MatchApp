@@ -1,5 +1,6 @@
 package Command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,9 @@ public class Lexer {
             //remove ";" from the end of the string
             content = content.substring(0, content.length() - 1);
         }
-        return Arrays.asList(content.split("\\s*,\\s*"));
+        List<String> resultList = new ArrayList<>();
+        resultList.add(command_name);
+        resultList.addAll(Arrays.asList(content.split("\\s*,\\s*")));
+        return resultList;
     }
 }
