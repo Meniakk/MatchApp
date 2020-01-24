@@ -11,7 +11,7 @@ public class Parser {
         commands = new HashMap<>();
         commands.put("is_user", new IsUserRegisteredCommand());
         commands.put("new_user", new RegisterNewUserCommand());
-        //commands.put("get", new);
+        commands.put("get", new GetKMatchesCommand());
         commands.put("love", new LikeCommand());
         commands.put("loved", new GetUserThatLikedCommand());
         commands.put("bi", new BusinessInformationCommand());
@@ -21,8 +21,13 @@ public class Parser {
 
         String commandName = line.get(0);
         ICommand<String> command = commands.get(commandName);
-        String result = command.doCommand(line);
-        return result;
+        String result;
+        if (command == null) {
+            result = "0";
+        } else {
+            result = command.doCommand(line);
+        }
+        return result + ";";
     }
 
 }

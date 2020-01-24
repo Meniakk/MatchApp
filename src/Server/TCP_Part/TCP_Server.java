@@ -31,12 +31,13 @@ public class TCP_Server {
     public void acceptClients() throws Exception {
         String clientSentence;
         ServerSocket welcomeSocket = new ServerSocket(port);
+        Socket connectionSocket = welcomeSocket.accept();
+        BufferedReader inFromClient =
+                new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+        while (this.stay_alive)
+        {
 
-        while (this.stay_alive) {
-            Socket connectionSocket = welcomeSocket.accept();
-            BufferedReader inFromClient =
-                    new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
             clientSentence = inFromClient.readLine();
             System.out.println("Received: " + clientSentence);
 

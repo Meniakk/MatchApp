@@ -132,11 +132,14 @@ public class UserProxy implements IUser, IVisitable {
 
     @Override
     public List<IUser> getKMatches(IMatcher matcher, int k) {
-        if (k == 1) {
+        if (k == 1)
+        {
             m_user.getKMatches(matcher, k);
-        } else if (k > 1) {
-            if (m_user.getUserType() == UserType.MEMBER || m_user.getUserType() == UserType.GOLD) {
-                m_user.getKMatches(matcher, k);
+        } else if (k > 1)
+        {
+            if (m_user.getUserType() == UserType.MEMBER || m_user.getUserType() == UserType.GOLD)
+            {
+                return m_user.getKMatches(matcher, k);
             }
         }
         return null;

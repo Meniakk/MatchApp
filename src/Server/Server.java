@@ -20,9 +20,10 @@ public class Server {
     private List<IUser> m_usersList;
     private short m_nextID;
 
-    public static final Server instance = new Server();
+    private static Server instance = new Server();
 
-    public static Server getInstance(){
+    public static Server getInstance()
+    {
         return instance;
     }
 
@@ -67,21 +68,34 @@ public class Server {
         return matches;
     }
 
-    public boolean createNewUser(short age, String name, String shortDescription, String longDescription, IUser.UserType userType, IUser.UserSex userSex, IUser.UserSex interestedIn)
+    public short createNewUser(short age, String name, String shortDescription, String longDescription, IUser.UserType userType, IUser.UserSex userSex, IUser.UserSex interestedIn)
     {
         boolean creationSucceeded = false;
         try
         {
             IUser newUser = new UserProxy(m_nextID, age, name, shortDescription, longDescription, userType, userSex, interestedIn);
             XMLDataBase.getInstance().SaveUser(newUser);
-            ++m_nextID;
             m_usersList.add(newUser);
             creationSucceeded = true;
         }
-        catch (Exception ignore)
-        {}
+        catch (Exception e)
+        {
+            Logger.getInstance().WriteToLog(
+                    ILogger.LogLevel.WARNING,
+                    ILogger.LogSubject.SERVER,
+                    e.getMessage()
+            );
+        }
 
-        return creationSucceeded;
+        if (creationSucceeded)
+        {
+            ++m_nextID;
+            return (short)(m_nextID - 1);
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public void accept(IVisitor visitor)

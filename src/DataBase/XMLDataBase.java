@@ -27,12 +27,13 @@ import User.IUser;
 
 public class XMLDataBase {
 
-    public static final XMLDataBase instance = new XMLDataBase();
+    private static final XMLDataBase instance = new XMLDataBase();
 
     private XMLDataBase()
     { }
 
-    public static XMLDataBase getInstance(){
+    public static XMLDataBase getInstance()
+    {
         return instance;
     }
 
@@ -50,19 +51,15 @@ public class XMLDataBase {
             {
                 int userIndexInt = Integer.parseInt(userIndex);
 
-                // Do not load loaded users.
-                if (! Server.getInstance().isUserExist((short)userIndexInt))
+                IUser userToLoad = LoadUser(userIndexInt);
+                if (userToLoad != null)
                 {
-                    IUser userToLoad = LoadUser(userIndexInt);
-                    if (userToLoad != null)
-                    {
-                        userList.add(userToLoad);
-                    }
+                    userList.add(userToLoad);
                 }
-
             }
-            catch (Exception ignore)
-            { }
+            catch(Exception ignore)
+            {
+            }
         }
         return userList;
     }

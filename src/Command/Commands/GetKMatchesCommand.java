@@ -13,8 +13,8 @@ public class GetKMatchesCommand implements ICommand<String> {
 
     @Override
     public String doCommand(List<String> line) {
-        short id = Short.parseShort(line.get(0));
-        int k = Integer.parseInt(line.get(1));
+        short id = Short.parseShort(line.get(1));
+        int k = Integer.parseInt(line.get(2));
 
         IMatcher matcher = new LevenshteinDistanceMatcher();
         IUser userToMatch = Server.getInstance().getUserByID(id);

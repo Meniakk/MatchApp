@@ -80,11 +80,11 @@ public class RegisterNewUserCommand implements ICommand<String> {
                 return "0";
         }
 
-        boolean success = Server.Server.getInstance().createNewUser(age, name, shortDescription, longDescription, userType, userSex, interestedIn);
+        int id = Server.Server.getInstance().createNewUser(age, name, shortDescription, longDescription, userType, userSex, interestedIn);
         Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.COMMAND,
                 "RegisterNewUserCommand: Registered a new user");
-        if (success)
-            return "1";
+        if (id > 0 )
+            return " "+id;
         else
             return "0";
     }

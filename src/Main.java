@@ -3,11 +3,15 @@ import Command.Parser;
 import Server.TCP_Part.TCP_Server;
 
 public class Main {
-    public static void main() {
+    public static void main(String [] args)
+    {
         TCP_Server my_tcp_server = new TCP_Server(new Lexer(), new Parser());
-        try {
+        try
+        {
             my_tcp_server.acceptClients();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }

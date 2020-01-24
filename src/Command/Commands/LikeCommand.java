@@ -5,7 +5,7 @@ import Logger.ILogger;
 import Logger.Logger;
 import Server.Server;
 import User.IUser;
-import Logger.ILogger.LogLevel
+import Logger.ILogger.LogLevel;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class LikeCommand implements ICommand<String> {
             IUser user = Server.getInstance().getUserByID(id);
 
             short idOther = Short.parseShort(line.get(2));
-            IUser otherUser = Server.getInstance().getUserByID(id);
+            IUser otherUser = Server.getInstance().getUserByID(idOther);
 
             user.addLikedUser(otherUser);
             otherUser.addLikedBy(user);

@@ -1,5 +1,6 @@
 package User;
 
+import Matcher.IMatcher;
 import Server.Server;
 import Visitor.CustomerCounterVisitor;
 import Visitor.IVisitor;
@@ -16,8 +17,8 @@ final public class RealUser implements IUser {
     private UserType m_userType;
     private UserSex m_userSex;
     private UserSex m_interestedIn;
-    List<IUser> m_usersThatLiked;   // Users that liked the current user.
-    List<IUser> m_likedUsers;       // Users that the current user liked.
+    private List<IUser> m_usersThatLiked;   // Users that liked the current user.
+    private List<IUser> m_likedUsers;       // Users that the current user liked.
 
 
     public RealUser(short id, short age, String name, String shortDescription, String longDescription, UserType userType, UserSex userSex, UserSex interestedIn)
@@ -167,6 +168,12 @@ final public class RealUser implements IUser {
         CustomerCounterVisitor visitor = new CustomerCounterVisitor();
         Server.getInstance().accept(visitor);
         return visitor;
+    }
+
+    @Override
+    public List<IUser> getKMatches(IMatcher matcher, int k)
+    {
+        return Server.getInstance().getKMatches(this, matcher, k);
     }
 
 }
