@@ -25,11 +25,6 @@ class ConsiderateMatcher implements IMatcher
     }
 
     @Override
-    public IUser getMatch(IUser userToMatch, List<IUser> usersList) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public List<IUser> getKMatches(IUser userToMatch, List<IUser> usersList, int k) {
         throw new NotImplementedException();
     }

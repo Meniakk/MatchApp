@@ -1,4 +1,0 @@
-I created this package so we could work on the server on the same time without having git conflicts.
-Here I'm going to work on the TCP part of the server.
-
-Later in the project we'll put this code in the Server class.

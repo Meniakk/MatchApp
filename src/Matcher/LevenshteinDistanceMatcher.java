@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class LevenshteinDistanceMatcher extends ConsiderateMatcher implements IMatcher
 {
-    @Override
+
     public IUser getMatch(IUser userToMatch, List<IUser> usersList)
     {
         List<IUser> possibleMatches = super.getPossibleMatches(userToMatch, usersList);

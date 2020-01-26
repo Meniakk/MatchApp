@@ -33,21 +33,6 @@ public class Server {
         m_nextID = XMLDataBase.getInstance().GetNextID();
     }
 
-    public IUser getMatch(IUser userToMatch, IMatcher matcher)
-    {
-        Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.SERVER, String.format("Looking for a match for %d", userToMatch.getId()));
-        IUser match = matcher.getMatch(userToMatch, m_usersList);
-        if (match == null)
-        {
-            Logger.getInstance().WriteToLog(ILogger.LogLevel.WARNING, ILogger.LogSubject.SERVER, "Could not find a match");
-        }
-        else
-        {
-            Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.SERVER, String.format("Matched %d", match.getId()));
-        }
-        return match;
-    }
-
     public List<IUser> getKMatches(IUser userToMatch, IMatcher matcher, int k)
     {
         Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.SERVER,

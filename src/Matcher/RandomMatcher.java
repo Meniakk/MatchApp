@@ -8,7 +8,6 @@ import java.util.Random;
 public class RandomMatcher extends ConsiderateMatcher implements IMatcher
 {
 
-    @Override
     public IUser getMatch(IUser userToMatch, List<IUser> usersList)
     {
         Random rng = new Random();

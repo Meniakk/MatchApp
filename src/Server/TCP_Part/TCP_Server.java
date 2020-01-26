@@ -2,6 +2,8 @@ package Server.TCP_Part;
 
 import Command.Lexer;
 import Command.Parser;
+import Logger.ILogger;
+import Logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -37,24 +39,29 @@ public class TCP_Server {
         DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
         while (this.stay_alive)
         {
-
             clientSentence = inFromClient.readLine();
             if (clientSentence == null)
             {
                 close();
                 continue;
             }
-            System.out.println("Received: " + clientSentence);
+
+            Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO,
+                    ILogger.LogSubject.SERVER,
+                    "Received: " + clientSentence);
 
             String returnValue = parser.parse(lexer.lex(clientSentence));
-            System.out.println("Returned: " + returnValue);
+
+            Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO,
+                    ILogger.LogSubject.SERVER,
+                    "Returned: " + returnValue);
+
             outToClient.writeBytes(returnValue);
         }
         welcomeSocket.close();
     }
-    //todo close the connection after each response
 
-    public void close()
+    private void close()
     {
         this.stay_alive = false;
     }
