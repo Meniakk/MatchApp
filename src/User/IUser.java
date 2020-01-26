@@ -2,11 +2,12 @@ package User;
 
 import Matcher.IMatcher;
 import Visitor.CustomerCounterVisitor;
+import Visitor.IVisitable;
 import Visitor.IVisitor;
 
 import java.util.List;
 
-public interface IUser {
+public interface IUser extends IVisitable {
 
     short getId();
     short getAge();

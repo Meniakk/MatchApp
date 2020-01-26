@@ -8,7 +8,7 @@ import Visitor.IVisitable;
 
 import java.util.List;
 
-public class UserProxy implements IUser, IVisitable {
+public class UserProxy implements IUser {
 
     private IUser m_user;
 
