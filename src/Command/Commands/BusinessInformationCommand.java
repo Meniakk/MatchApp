@@ -19,44 +19,34 @@ public class BusinessInformationCommand implements ICommand<String> {
         short tag = -1;
         IUser user = null;
 
-        try
-        {
+        try {
             id = Short.parseShort(line.get(1));
             tag = Short.parseShort(line.get(2));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             isSuccess = false;
         }
 
-        if (isSuccess)
-        {
+        if (isSuccess) {
             user = Server.getInstance().getUserByID(id);
         }
-        if (user == null)
-        {
+        if (user == null) {
             isSuccess = false;
-        }
-        else
-        {
-            switch (tag)
-            {
+        } else {
+            switch (tag) {
                 case 1:
                     visitor = user.generateUsersCounterReport();
                     break;
+                default:
+                    break;
             }
-            if (visitor == null)
-            {
+            if (visitor == null) {
                 isSuccess = false;
             }
         }
 
-        if (isSuccess)
-        {
+        if (isSuccess) {
             return visitor.toString();
-        }
-        else
-        {
+        } else {
             return "0";
         }
     }

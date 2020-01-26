@@ -13,12 +13,26 @@ public class GetKMatchesCommand implements ICommand<String> {
 
     @Override
     public String doCommand(List<String> line) {
-        short id = Short.parseShort(line.get(1));
-        int k = Integer.parseInt(line.get(2));
+        short id = 0;
+        int k = 0;
+        boolean isSuccess = true;
+        IUser userToMatch = null;
+        IMatcher matcher = null;
+        List<IUser> matches = null;
+        try {
+            id = Short.parseShort(line.get(1));
+            k = Integer.parseInt(line.get(2));
+        } catch (Exception e) {
+            isSuccess = false;
+        }
+        if (isSuccess) {
+            userToMatch = Server.getInstance().getUserByID(id);
+        }
+        if (userToMatch != null) {
+            matcher = new LevenshteinDistanceMatcher();
+            matches = Server.getInstance().getKMatches(userToMatch, matcher, k);
+        }
 
-        IMatcher matcher = new LevenshteinDistanceMatcher();
-        IUser userToMatch = Server.getInstance().getUserByID(id);
-        List<IUser> matches = Server.getInstance().getKMatches(userToMatch, matcher, k);
         if (matches != null) {
             StringBuilder resultStringBuilder = new StringBuilder();
             for (IUser match : matches) {

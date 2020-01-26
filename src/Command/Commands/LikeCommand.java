@@ -14,11 +14,20 @@ public class LikeCommand implements ICommand<String> {
     @Override
     public String doCommand(List<String> line) {
         try {
-            short id = Short.parseShort(line.get(1));
-            IUser user = Server.getInstance().getUserByID(id);
+            short id = 0;
+            short idOther = 0;
+            IUser user = null;
+            IUser otherUser = null;
 
-            short idOther = Short.parseShort(line.get(2));
-            IUser otherUser = Server.getInstance().getUserByID(idOther);
+            try {
+                id = Short.parseShort(line.get(1));
+                user = Server.getInstance().getUserByID(id);
+
+                idOther = Short.parseShort(line.get(2));
+                otherUser = Server.getInstance().getUserByID(idOther);
+            } catch (Exception e) {
+                return "0";
+            }
 
             user.addLikedUser(otherUser);
             otherUser.addLikedBy(user);

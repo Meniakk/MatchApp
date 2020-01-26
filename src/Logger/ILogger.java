@@ -1,6 +1,5 @@
 package Logger;
 
-import sun.rmi.runtime.Log;
 
 public interface ILogger {
 

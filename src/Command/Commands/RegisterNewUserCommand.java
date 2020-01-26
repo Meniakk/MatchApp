@@ -20,13 +20,24 @@ public class RegisterNewUserCommand implements ICommand<String> {
 
     @Override
     public String doCommand(List<String> line) {
-        short age = Short.parseShort(line.get(1));
-        String name = line.get(2);
-        String shortDescription = line.get(3);
-        String longDescription = line.get(4);
-        String userTypeString = line.get(5).toUpperCase();
-        String userSexString = line.get(6).toUpperCase();
-        String interestedInString = line.get(7).toUpperCase();
+        short age = 0;
+        String name = "";
+        String shortDescription = "";
+        String longDescription = "";
+        String userTypeString = "";
+        String userSexString = "";
+        String interestedInString = "";
+        try {
+            age = Short.parseShort(line.get(1));
+            name = line.get(2);
+            shortDescription = line.get(3);
+            longDescription = line.get(4);
+            userTypeString = line.get(5).toUpperCase();
+            userSexString = line.get(6).toUpperCase();
+            interestedInString = line.get(7).toUpperCase();
+        } catch (Exception e) {
+            return "0";
+        }
 
         IUser.UserType userType;
         switch (userTypeString) {
@@ -83,8 +94,8 @@ public class RegisterNewUserCommand implements ICommand<String> {
         int id = Server.Server.getInstance().createNewUser(age, name, shortDescription, longDescription, userType, userSex, interestedIn);
         Logger.getInstance().WriteToLog(ILogger.LogLevel.INFO, ILogger.LogSubject.COMMAND,
                 "RegisterNewUserCommand: Registered a new user");
-        if (id > 0 )
-            return " "+id;
+        if (id > 0)
+            return " " + id;
         else
             return "0";
     }

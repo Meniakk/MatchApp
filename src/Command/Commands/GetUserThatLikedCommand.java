@@ -12,14 +12,22 @@ public class GetUserThatLikedCommand implements ICommand<String> {
 
     @Override
     public String doCommand(List<String> line) {
-        short id = Short.parseShort(line.get(1));
+        short id = 0;
+        IUser user = null;
+        IUser personWhoLikedUser = null;
+        try {
+            id = Short.parseShort(line.get(1));
+        } catch (Exception e) {
+            return "0";
+        }
+        if (id == 0) {
+            return "0";
+        } else {
+            user = Server.getInstance().getUserByID(id);
+            personWhoLikedUser = user.getUserThatLiked();
+        }
 
-        IUser user = Server.getInstance().getUserByID(id);
-
-        IUser personWhoLikedUser = user.getUserThatLiked();
-
-        if (personWhoLikedUser == null)
-        {
+        if (personWhoLikedUser == null) {
             Logger.getInstance().WriteToLog(
                     ILogger.LogLevel.WARNING,
                     ILogger.LogSubject.COMMAND,
